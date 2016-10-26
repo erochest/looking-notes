@@ -6,9 +6,19 @@ Feature: Add tags to describe a book
 
   Scenario: Add tags to an existing book
     Given I am logged into booknotes
-      And I have just added a note
+      And I have just added *A Tale for the Time Being*
     When I click to add a tag
     Then I should see the tag editing screen
+
+  Scenario: Add tags to an existing book
+    Given I am logged into booknotes
+      And I have just added *A Tale for the Time Being*
+    When I click to add a tag
+     And I enter the tags *meditation*, *time*, *quantum-mechanics*
+    Then *A Tale for the Time Being* should have 3 tags
+     And *meditation* should be a tag
+     And *time* should be a tag
+     And *quantum-mechanics* should be a tag
 
   Scenario: Add tags to multiple books
     Given I am logged into booknotes

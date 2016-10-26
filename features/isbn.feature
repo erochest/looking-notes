@@ -8,7 +8,7 @@ Feature: Scan a book's ISBN
     Given I have a book
       And I have my phone
       And I am logged into booknotes
-    When I click to scan a book
+    When I click scan
     Then booknotes should bring up the camera
 
   Scenario: Search WorldCat by ISBN-10

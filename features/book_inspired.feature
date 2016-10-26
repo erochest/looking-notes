@@ -7,21 +7,21 @@ Feature: Indicate what book inspired the user to read a book
   Scenario: Find a new influencing book by scanning its ISBN
     Given I am logged into booknotes
       And I am looking at *A Tale for the Time Being*
-    When I click to scan an influence
-    Then I should get a camera
+    When I click scan
+    Then booknotes should bring up the camera
 
   Scenario: Find an existing influencing book by scanning its ISBN
     Given I am logged into booknotes
       And I am looking at *A Tale for the Time Being*
       And *Reflections on the Way to the Gallows* has a note
-    When I scan a barcode
-    Then I should see the existing entry
+    When I scan 978-0520084216
+    Then I should be able to select *Reflections on the Way to the Gallows*
 
   Scenario: Search for an existing book as the influencing book
     Given I am logged into booknotes
       And I am looking at *A Tale for the Time Being*
       And *Reflections on the Way to the Gallows* has a note
-    When I click to search for an influence
+    When I click search
     Then I should see a search box
      And I should see a list of existing notes
      And *Reflections on the Way to the Gallows* should be in the results
@@ -29,8 +29,8 @@ Feature: Indicate what book inspired the user to read a book
   Scenario: Link an existing book as the influencing book
     Given I am logged into booknotes
       And I am looking at *A Tale for the Time Being*
-      And "Reflections on the Way to the Gallows* has a note
-      And I click to search for an influence
+      And *Reflections on the Way to the Gallows* has a note
+      And I click search
     When I type "Reflections" in the search box
     Then the list of notes should narrow
      And *Reflections on the Way to the Gallows* should be in the results

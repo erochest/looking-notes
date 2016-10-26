@@ -8,6 +8,6 @@ Feature: Mark that the user has finished a book
     Given I am logged into booknotes
       And I am looking at *A Tale for the Time Being*
       And the day is 2016-10-25
-    When I click that I am done with the book
+    When I click finished
     Then the note should indicate that I am finished with the book
      And the note's finished timestamp should be 2016-10-25

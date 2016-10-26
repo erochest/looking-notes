@@ -7,22 +7,22 @@ Feature: Scan a book's ISBN
   Scenario: Scan ISBN with camera
     Given I have a book
       And I have my phone
-      And I am logged into booknotes
+      And I am logged into looking notes
     When I click scan
-    Then booknotes should bring up the camera
+    Then looking notes should bring up the camera
 
   Scenario: Search WorldCat by ISBN-10
-    Given I am logged into booknotes
+    Given I am logged into looking notes
     When I scan 0345497503
     Then I should be able to select *Kraken*
 
   Scenario: Search WorldCat by ISBN-13
-    Given I am logged into booknotes
+    Given I am logged into looking notes
     When I scan 978-0345497505
     Then I should be able to select *Kraken*
 
   Scenario: Confirm search result
-    Given I am logged into booknotes
+    Given I am logged into looking notes
       And I have scanned 978-0345497505
       And I see *Kraken* in the search results
     When I confirm that *Kraken* is the book

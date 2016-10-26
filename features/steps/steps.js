@@ -6,7 +6,7 @@ function pending(cb) {
 }
 
 module.exports = function() {
-  this.Given(/^I am logged into booknotes$/, pending);
+  this.Given(/^I am logged into looking notes$/, pending);
   this.Given(/^I have selected multiple notes$/, pending);
   this.Given(/^I have just added (.*)$/, pending);
   this.Given(/^the day is (\d+-\d+-\d+)$/, pending);
@@ -16,7 +16,7 @@ module.exports = function() {
   this.Given(/^I have my phone$/, pending);
   this.Given(/^I have a book$/, pending);
   this.Given(/^I have a note for (.*)$/, pending);
-  this.Given(/^I have an API key for booknotes$/, pending);
+  this.Given(/^I have an API key for looking notes$/, pending);
   this.Given(/^(.*) has a note$/, pending);
 
   this.When(/^I enter the tags (.*)$/, pending);
@@ -35,7 +35,7 @@ module.exports = function() {
             pending);
   this.Then(/^(.*) should be added to my catalogue$/, pending);
   this.Then(/^I should be able to select (.*)$/, pending);
-  this.Then(/^booknotes should bring up the camera$/, pending);
+  this.Then(/^looking notes should bring up the camera$/, pending);
   this.Then(/^it should contain (.*)$/, pending);
   this.Then(/^it should respond with the notes as JSON\-LD$/, pending);
   this.Then(/^it should download a JSON\-LD file$/, pending);

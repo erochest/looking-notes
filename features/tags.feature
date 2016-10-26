@@ -5,13 +5,13 @@ Feature: Add tags to describe a book
   So that I can search and change the visualization based on this metadata
 
   Scenario: Add tags to an existing book
-    Given I am logged into booknotes
+    Given I am logged into looking notes
       And I have just added *A Tale for the Time Being*
     When I click tag
     Then I should see the tag editing screen
 
   Scenario: Add tags to an existing book
-    Given I am logged into booknotes
+    Given I am logged into looking notes
       And I have just added *A Tale for the Time Being*
     When I click tag
      And I enter the tags *meditation*, *time*, *quantum-mechanics*
@@ -21,7 +21,7 @@ Feature: Add tags to describe a book
      And *quantum-mechanics* should be a tag
 
   Scenario: Add tags to multiple books
-    Given I am logged into booknotes
+    Given I am logged into looking notes
       And I have selected multiple notes
     When I click bulk-edit
     Then I should see the tag editing screen

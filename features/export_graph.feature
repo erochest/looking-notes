@@ -5,7 +5,7 @@ Feature: Export the graph as JSON-LD
   So that I can incorporate that information into my site.
 
   Scenario: Download
-    Given I am logged into booknotes
+    Given I am logged into looking notes
       And I am looking at the settings page
       And I have a note for *A Tale for the Time Being*
     When I click export
@@ -13,7 +13,7 @@ Feature: Export the graph as JSON-LD
      And it should contain *A Tale for the Time Being*
 
   Scenario: API
-    Given I have an API key for booknotes
+    Given I have an API key for looking notes
       And I have a note for *A Tale for the Time Being*
     When I query the REST interface for all notes
     Then it should respond with the notes as JSON-LD

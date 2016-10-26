@@ -73,4 +73,5 @@
   }
 
   // Your custom JavaScript goes here
+  lookingnotes.LookingNotes.main();
 })();

@@ -34,9 +34,15 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import {output as pagespeed} from 'psi';
 import pkg from './package.json';
 import cucumber from 'gulp-cucumber';
+import purescript from 'gulp-purescript';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
+
+const purescriptSources = [
+  'src/**/*.purs',
+  'bower_components/purescript-*/src/**/*.purs'
+];
 
 // Lint JavaScript
 gulp.task('lint', () =>
@@ -105,11 +111,12 @@ gulp.task('styles', () => {
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
-gulp.task('scripts', () =>
+gulp.task('scripts', ['psc-bundle'], () =>
     gulp.src([
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
       //       to be correctly concatenated
+      './app/scripts/lookingnotes.js',
       './app/scripts/main.js'
       // Other scripts
     ])
@@ -172,8 +179,9 @@ gulp.task('serve', ['scripts', 'styles'], () => {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts', reload]);
+  gulp.watch(['app/scripts/**/*.js'], ['scripts', reload]);
   gulp.watch(['app/images/**/*'], reload);
+  gulp.watch(['src/**/*.purs'], ['psc-bundle', 'scripts', reload]);
 });
 
 // Build and serve the output from the dist build
@@ -196,7 +204,8 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['lint', 'html', 'scripts', 'images', 'copy'],
+    'psc-bundle',
+    ['html', 'scripts', 'images', 'copy'],
     'generate-service-worker',
     'cucumber',
     cb
@@ -251,8 +260,18 @@ gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
   });
 });
 
-gulp.task('cucumber', () => gulp.src('features/*').pipe(cucumber({
+gulp.task('cucumber', ['psc-bundle'], () => gulp.src('features/*').pipe(cucumber({
   'steps': 'features/steps/steps.js',
   // 'support': 'features/support/*.js',
   'format': 'summary'
 })));
+
+gulp.task('psc', () => purescript.psc({
+  src: purescriptSources
+}));
+
+gulp.task('psc-bundle', ['psc'], () => purescript.pscBundle({
+  src: 'output/**/*.js',
+  output: 'app/scripts/lookingnotes.js',
+  namespace: 'lookingnotes'
+}));

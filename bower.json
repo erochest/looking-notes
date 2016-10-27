@@ -1,0 +1,24 @@
+{
+  "name": "looking-notes",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Eric Rochester <erochest@gmail.com>"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/erochest/looking-notes",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "purescript-console": "^2.0.0",
+    "purescript-functions": "^2.0.0",
+    "purescript-pux": "^6.0.1",
+    "purescript-st": "^2.0.0"
+  }
+}

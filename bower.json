@@ -15,10 +15,8 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "purescript-console": "^2.0.0",
-    "purescript-functions": "^2.0.0",
-    "purescript-pux": "^6.0.1",
-    "purescript-st": "^2.0.0"
+  "devDependencies": {
+    "purescript-eff": "^2.0.0",
+    "purescript-console": "^2.0.0"
   }
 }

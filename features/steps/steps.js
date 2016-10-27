@@ -6,6 +6,7 @@ function pending(cb) {
 }
 
 module.exports = function() {
+  // TODO
   this.Given(/^I am logged into looking notes$/, pending);
   this.Given(/^I have selected multiple notes$/, pending);
   this.Given(/^I have just added (.*)$/, pending);
@@ -13,8 +14,8 @@ module.exports = function() {
   this.Given(/^I am looking at (.*)$/, pending);
   this.Given(/^I see (.*) in the search results$/, pending);
   this.Given(/^I have scanned ([\d-]*)$/, pending);
-  this.Given(/^I have my phone$/, pending);
-  this.Given(/^I have a book$/, pending);
+  this.Given(/^I have my phone$/, function() { });
+  this.Given(/^I have a book$/, function() { });
   this.Given(/^I have a note for (.*)$/, pending);
   this.Given(/^I have an API key for looking notes$/, pending);
   this.Given(/^(.*) has a note$/, pending);
@@ -23,6 +24,7 @@ module.exports = function() {
   this.When(/^I confirm that (.*) is the book$/, pending);
   this.When(/^I scan ([\d-]*)$/, pending);
   this.When(/^I query the REST interface for all notes$/, pending);
+  // TODO
   this.When(/^I click ([\w-]+)$/, pending);
   this.When(/^I type "([^"]*)" in the (\w+) box$/, pending);
 
@@ -35,6 +37,7 @@ module.exports = function() {
             pending);
   this.Then(/^(.*) should be added to my catalogue$/, pending);
   this.Then(/^I should be able to select (.*)$/, pending);
+  // TODO
   this.Then(/^looking notes should bring up the camera$/, pending);
   this.Then(/^it should contain (.*)$/, pending);
   this.Then(/^it should respond with the notes as JSON\-LD$/, pending);
@@ -44,4 +47,4 @@ module.exports = function() {
   this.Then(/^I should see a list of existing notes$/, pending);
   this.Then(/^I should see a search box$/, pending);
   this.Then(/^I should see the existing entry$/, pending);
-}
+};

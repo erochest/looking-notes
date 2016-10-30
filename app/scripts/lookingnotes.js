@@ -23470,13 +23470,13 @@ var PS = {};
       return Scan;
   })();
   var renderBook = function (book) {
-      return React_DOM.div([ React_DOM_Props.className("mdl-card mdl-shadow--2dp") ])([ React_DOM.div([ React_DOM_Props.className("mdl-card__title") ])([ React_DOM.h2([ React_DOM_Props.className("mdl-card__title-text") ])([ React_DOM.text(book.title) ]) ]) ]);
+      return React_DOM.div([ React_DOM_Props.className("mdl-cell mdl-cell--4-col mdl-cell--6-col-tablet mdl-cell--12-col-phone") ])([ React_DOM.div([ React_DOM_Props.className("mdl-card mdl-shadow--2dp") ])([ React_DOM.div([ React_DOM_Props.className("mdl-card__title") ])([ React_DOM.h2([ React_DOM_Props.className("mdl-card__title-text") ])([ React_DOM.text(book.title) ]) ]) ]) ]);
   };
   var render = function (dispatch) {
       return function (v) {
           return function (state) {
               return function (v1) {
-                  return [ React_DOM.div([ React_DOM_Props.className("mdl-cell mdl-cell--4-col mdl-cell--6-col-tablet mdl-cell--12-col-phone") ])(Data_Functor.map(Data_Functor.functorArray)(renderBook)(state.bookList)) ];
+                  return [ React_DOM.div([ React_DOM_Props.className("mdl-grid") ])(Data_Functor.map(Data_Functor.functorArray)(renderBook)(state.bookList)) ];
               };
           };
       };
@@ -23494,6 +23494,9 @@ var PS = {};
   var initialState = {
       bookList: [ {
           title: "Immorality", 
+          isbn: "..."
+      }, {
+          title: "A Tale for the Time Being", 
           isbn: "..."
       } ]
   };

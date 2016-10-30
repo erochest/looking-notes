@@ -40,21 +40,26 @@ type State =
     }
 
 initialState :: State
-initialState = { bookList: [{title: "Immorality", isbn: "..."}] }
+initialState = {
+    bookList: [
+        {title: "Immorality", isbn: "..."},
+        {title: "A Tale for the Time Being", isbn: "..."}
+    ]
+}
 
 render :: forall a. T.Render State a Action
 render dispatch _ state _ =
-    [ R.div [ RP.className "mdl-cell mdl-cell--4-col mdl-cell--6-col-tablet\
-                            \ mdl-cell--12-col-phone" ]
-            (map renderBook state.bookList)
-    ]
+    [ R.div [ RP.className "mdl-grid" ] (map renderBook state.bookList) ]
 
 renderBook :: Book -> R.ReactElement
 renderBook book =
-    R.div [ RP.className "mdl-card mdl-shadow--2dp" ]
-          [ R.div [ RP.className "mdl-card__title" ]
-                  [ R.h2 [ RP.className "mdl-card__title-text" ]
-                         [ R.text book.title ]
+    R.div [ RP.className "mdl-cell mdl-cell--4-col mdl-cell--6-col-tablet\
+                            \ mdl-cell--12-col-phone" ]
+          [ R.div [ RP.className "mdl-card mdl-shadow--2dp" ]
+                  [ R.div [ RP.className "mdl-card__title" ]
+                          [ R.h2 [ RP.className "mdl-card__title-text" ]
+                                 [ R.text book.title ]
+                          ]
                   ]
           ]
 

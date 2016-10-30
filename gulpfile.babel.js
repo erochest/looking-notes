@@ -31,10 +31,12 @@ import runSequence from 'run-sequence';
 import browserSync from 'browser-sync';
 import swPrecache from 'sw-precache';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import cucumber from 'gulp-cucumber';
+import spawn from 'gulp-spawn';
+import transform from 'vinyl-transform';
+import child_process from 'child_process';
 import {output as pagespeed} from 'psi';
 import pkg from './package.json';
-import cucumber from 'gulp-cucumber';
-import purescript from 'gulp-purescript';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -111,7 +113,7 @@ gulp.task('styles', () => {
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
-gulp.task('scripts', ['psc-bundle'], () =>
+gulp.task('scripts', () =>
     gulp.src([
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
@@ -137,7 +139,7 @@ gulp.task('scripts', ['psc-bundle'], () =>
 gulp.task('html', () => {
   return gulp.src('app/**/*.html')
     .pipe($.useref({
-      searchPath: '{.tmp,app}',
+      searchPath: '{.tmp,app,node_modules}',
       noAssets: true
     }))
 
@@ -162,7 +164,7 @@ gulp.task('html', () => {
 gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
-gulp.task('serve', ['scripts', 'styles'], () => {
+gulp.task('serve', ['pulp', 'scripts', 'styles'], () => {
   browserSync({
     notify: false,
     // Customize the Browsersync console logging prefix
@@ -173,7 +175,7 @@ gulp.task('serve', ['scripts', 'styles'], () => {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: ['.tmp', 'app'],
+    server: ['.tmp', 'app', 'node_modules'],
     port: 3000
   });
 
@@ -181,7 +183,7 @@ gulp.task('serve', ['scripts', 'styles'], () => {
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['scripts', reload]);
   gulp.watch(['app/images/**/*'], reload);
-  gulp.watch(['src/**/*.purs'], ['psc-bundle', 'scripts', reload]);
+  gulp.watch(purescriptSources, ['pulp', 'scripts', reload]);
 });
 
 // Build and serve the output from the dist build
@@ -204,7 +206,7 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    'psc-bundle',
+    'pulp',
     ['html', 'scripts', 'images', 'copy'],
     'generate-service-worker',
     'cucumber',
@@ -260,18 +262,18 @@ gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
   });
 });
 
-gulp.task('cucumber', ['psc-bundle'], () => gulp.src('features/*').pipe(cucumber({
+gulp.task('cucumber', ['pulp'], () => gulp.src('features/*').pipe(cucumber({
   'steps': 'features/steps/steps.js',
   // 'support': 'features/support/*.js',
   'format': 'summary'
 })));
 
-gulp.task('psc', () => purescript.psc({
-  src: purescriptSources
-}));
-
-gulp.task('psc-bundle', ['psc'], () => purescript.pscBundle({
-  src: 'output/**/*.js',
-  output: 'app/scripts/lookingnotes.js',
-  namespace: 'lookingnotes'
-}));
+gulp.task('pulp', () =>
+  child_process.spawn(
+      'pulp', [ 'browserify',
+                '--main', 'LookingNotes',
+                '--optimise',
+                '--to', './app/scripts/lookingnotes.js'
+      ]
+  )
+);

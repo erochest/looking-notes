@@ -17,6 +17,13 @@
   ],
   "devDependencies": {
     "purescript-eff": "^2.0.0",
-    "purescript-console": "^2.0.0"
+    "purescript-console": "^2.0.0",
+    "purescript-dom": "^3.1.0",
+    "purescript-nullable": "^2.0.0",
+    "purescript-maybe": "^2.0.1",
+    "purescript-thermite": "^3.0.0",
+    "purescript-react": "^2.0.0",
+    "purescript-react-dom": "^2.0.0",
+    "purescript-foldable-traversable": "^2.0.0"
   }
 }

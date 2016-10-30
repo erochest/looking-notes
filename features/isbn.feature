@@ -11,6 +11,12 @@ Feature: Scan a book's ISBN
     When I click scan
     Then looking notes should bring up the camera
 
+  Scenario: Cancel scanning
+    Given I am logged into looking notes
+    When I click scan
+     And I click cancel
+    Then looking notes should remove the camera
+
   Scenario: Search WorldCat by ISBN-10
     Given I am logged into looking notes
     When I scan 0345497503

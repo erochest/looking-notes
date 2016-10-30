@@ -73,5 +73,8 @@
   }
 
   // Your custom JavaScript goes here
-  lookingnotes.LookingNotes.main();
+  var dialog = document.querySelector('dialog');
+  if (dialog != null) {
+    dialogPolyfill.registerDialog(dialog);
+  }
 })();

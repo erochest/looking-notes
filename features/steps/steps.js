@@ -47,4 +47,5 @@ module.exports = function() {
   this.Then(/^I should see a list of existing notes$/, pending);
   this.Then(/^I should see a search box$/, pending);
   this.Then(/^I should see the existing entry$/, pending);
+  this.Then(/^looking notes should remove the camera$/, pending);
 };

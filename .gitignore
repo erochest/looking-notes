@@ -1,4 +1,7 @@
 node_modules
+bower_components
+output/
 dist/
+tmp/
 .tmp
 app.yaml

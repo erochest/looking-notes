@@ -2,7 +2,7 @@
 
 This is a companion to [Purdom Lindblad's](https://github.com/Purdom) *Looking Aids* project. This is an area where she can keep a reading journal, encoded with RDFa, and then [visualize the data](http://purdom.org/books/).
 
-But Purdom reads a lot, and blogging or writing consistently is hard. Marking the posts up with RDFa is also a PITA. To make that work, we also need to have an editor that will help. I've started thinking about that. However, that won't address the fundamental problem: a writing habit is hard to start and hard to maintain.
+But Purdom reads a lot, and blogging or writing consistently is hard. I had trouble keeping the [reading journal section of my site](http://www.ericrochester.com/reading-log/) up with what little I read. Marking the posts up with RDFa is also a PITA. To make that work, we also need to have an editor that will help. I've started thinking about that. However, that won't address the fundamental problem: a writing habit is hard to start and hard to maintain.
 
 That's where this comes in. This will make entering the initial data much easier. As easy as snapping a picture with your phone and tapping the screen a few times.
 

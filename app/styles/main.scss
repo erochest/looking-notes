@@ -217,3 +217,19 @@ html, body {
     bottom: 18px;
     right: 15px;
 }
+
+.center-fab {
+    position: fixed;
+    bottom: 100px;
+    right: 206px;
+}
+
+#scan-dialog {
+    height: 100%;
+    width: 100%;
+}
+
+.mdl-dialog__content {
+    height: 600;
+    width: 350;
+}

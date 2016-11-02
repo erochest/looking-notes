@@ -77,14 +77,122 @@
     </div>
 
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script src="quagga/dist/quagga.min.js"></script>
     <!-- build:js scripts/main.min.js -->
     <script src="scripts/main.js"></script>
-    <script src="scripts/lookingnotes.js"></script>
+    <!-- <script src="scripts/lookingnotes.js"></script> -->
     <!-- endbuild -->
 
     <!-- Built with love using Web Starter Kit -->
-    <dialog id="scan-dialog">
-      <div id="scan-pane"></div>
+    <dialog id="scan-dialog" class="mdl-dialog">
+      <!-- <h4 class="mdl-dialog__title">Scan ISBN</h4> -->
+      <div class="mdl-dialog__content">
+        <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored center-fab close">
+          <i class="material-icons" role="presentation">clear</i>
+        </button>
+      </div>
     </dialog>
+    <script>
+      (function() {
+        var dialog = document.querySelector("#scan-dialog");
+        var content = dialog.querySelector(".mdl-dialog__content");
+        var config = {
+          locator: {
+            patchSize: 'medium',
+            halfSample: true
+          },
+          locate: true,
+          numOfWorkers: navigator.hardwareConcurrency,
+          inputStream: {
+            type: "LiveStream",
+            target: content,
+            constraints: {
+              height: {max: 600},
+              width: {max: 340},
+              // width: {min: 640},
+              // height: {min: 480},
+              // aspectRatio: {min: 1, max: 100},
+              facingMode: "environment"
+            }
+          },
+          decoder: {
+            readers: [{
+              format: "ean_reader",
+              config: {
+                supplements: [
+                  "ean_5_reader", "ean_2_reader"
+                  ]
+              }
+            }]
+          }
+        };
+        console.log(config);
+
+        if (!dialog.showModal) {
+          dialogPolyfill.registerDialog(dialog);
+        }
+        dialog.querySelector('.close').addEventListener('click', function() {
+          Quagga.stop();
+          dialog.close();
+        });
+        dialog.showModal();
+        Quagga.init(config, function(err) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+
+          Quagga.onDetected(function(data) {
+            console.log('detected', data);
+          });
+
+          Quagga.onProcessed(function(result) {
+            var ctx = Quagga.canvas.ctx.overlay,
+                c   = Quagga.canvas.dom.overlay;
+
+            if (result) {
+              if (result.boxes) {
+                ctx.clearRect(
+                  0, 0,
+                  parseInt(c.getAttribute('width')),
+                  parseInt(c.getAttribute('height'))
+                );
+                result.boxes.filter(function (box) {
+                  return box !== result.box;
+                }).forEach(function (box) {
+                  Quagga.ImageDebug.drawPath(
+                    box,
+                    {x: 0, y: 1},
+                    c,
+                    {color: 'green', lineWidth: 2}
+                  );
+                });
+              }
+
+              if (result.box) {
+                Quagga.ImageDebug.drawPath(
+                  result.box,
+                  {x: 0, y: 1},
+                  c,
+                  {color: '#00F', lineWidth: 2}
+                );
+              }
+
+              if (result.codeResult && result.codeResult.code) {
+                Quagga.ImageDebug.drawPath(
+                  result.line,
+                  {x: 'x', y: 'y'},
+                  c,
+                  {color: 'red', lineWidth: 3}
+                );
+              }
+
+            }
+          });
+
+          Quagga.start();
+        });
+      })();
+    </script>
   </body>
 </html>
